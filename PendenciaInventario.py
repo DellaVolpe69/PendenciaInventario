@@ -46,7 +46,7 @@ st.markdown("""
 <style>
 /* Forçar cor branca em qualquer texto dentro de markdown ou write */
 /* p, span, div, label { */
-p, span, label {
+p, label {
     color: #EDEBE6 !important;
 }
 </style>
@@ -588,9 +588,8 @@ if st.session_state.pagina == "Cadastrar":
     st.markdown("""
         <style>
         /* Texto do label do file_uploader */
-        div[data-testid="stFileUploader"] label {
-            color: #EDEBE6 !important;
-            font-weight: 600;
+        div[data-testid="stFileUploader"] span {
+            color: #FFD966;
         }
         </style>
     """, unsafe_allow_html=True)
