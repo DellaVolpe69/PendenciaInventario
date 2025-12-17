@@ -25,7 +25,7 @@ fox_image = "https://raw.githubusercontent.com/DellaVolpe69/Images/main/Foxy4.pn
 
 ###### CONFIGURAR O TÍTULO DA PÁGINA #######
 st.set_page_config(
-    page_title="Inventário",
+    page_title="Pendências do Inventário",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
