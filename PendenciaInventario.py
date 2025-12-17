@@ -585,17 +585,15 @@ if st.session_state.pagina == "Cadastrar":
         
     ############################################
     
-    st.markdown("""
-        <style>
-        /* Texto do label do file_uploader */
-        div[data-testid="stFileUploader"] p {
-            color: #EDEBE6 !important;
-            font-weight: 600;
-        }
-        </style>
-    """, unsafe_allow_html=True)
-    
-    uploaded_files = st.file_uploader("Anexos", accept_multiple_files=True)
+    st.markdown(
+        "<p style='color:#EDEBE6; font-weight:600;'>📎 Anexos</p>",
+        unsafe_allow_html=True
+    )
+
+    uploaded_files = st.file_uploader(
+        label="",
+        accept_multiple_files=True
+    )
     
     # Criar espaço vazio nas laterais e centralizar os botões
     esp1, centro, esp2 = st.columns([1, 2, 1])
