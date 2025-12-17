@@ -1,6 +1,7 @@
 streamlit
 pandas
 supabase
+qrcode_scanner
 minio==7.1.2 
 pyarrow
 python-dotenv
