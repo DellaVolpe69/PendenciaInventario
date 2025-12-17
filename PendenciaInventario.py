@@ -771,6 +771,25 @@ elif st.session_state.pagina == "Editar":
 
         registro = df[df["ID"] == id_registro].iloc[0]
 
+        anexos = meu_minio.listar_anexos("formularios", prefixo)
+        
+        st.subheader("📎 Anexos deste registro")
+
+        if anexos:
+            for caminho_completo in anexos:
+                nome = caminho_completo.split("/")[-1]  # extraindo só "123_1.pdf"
+
+                st.write("➡️", nome)
+
+                data = meu_minio.manager.client.get_object(
+                    "formularios",
+                    caminho_completo
+                ).read()
+
+                st.download_button("Baixar", data, file_name=nome)
+        else:
+            st.info("Nenhum anexo encontrado para este registro.")
+
         with st.expander("✏️ Editar Registro"):
             
             novo_nfe = st.text_input("Número da NF-e", registro["NF_E"])
