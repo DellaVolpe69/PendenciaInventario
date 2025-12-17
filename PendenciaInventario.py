@@ -540,7 +540,8 @@ if st.session_state.pagina == "Cadastrar":
         entrada = st.text_area(
             "Conteúdo do QR Code / XML",
             value=st.session_state.xml_qr,
-            height=150
+            height=150,
+            disabled=True
         )
 
         if entrada:
