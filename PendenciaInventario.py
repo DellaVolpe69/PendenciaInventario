@@ -588,8 +588,9 @@ if st.session_state.pagina == "Cadastrar":
     st.markdown("""
         <style>
         /* Texto do label do file_uploader */
-        div[data-testid="stFileUploader"] span {
-            color: #FFD966;
+        div[data-testid="stFileUploader"] p {
+            color: #EDEBE6 !important;
+            font-weight: 600;
         }
         </style>
     """, unsafe_allow_html=True)
