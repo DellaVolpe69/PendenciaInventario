@@ -768,13 +768,12 @@ elif st.session_state.pagina == "Editar":
 
         if filtro_filial != "Todas":
             df = df[df["FILIAL"] == filtro_filial]
-            
-        df["CARIMBO"] = pd.to_datetime(df["CARIMBO"], errors="coerce")
 
-        if data_inicio:
-            df = df[pd.to_datetime(df["CARIMBO"]) >= pd.to_datetime(data_inicio)]
-        if data_fim:
-            df = df[pd.to_datetime(df["CARIMBO"]) <= pd.to_datetime(data_fim)]
+        if data_inicio is not None:
+            df = df[df["CARIMBO"] >= pd.Timestamp(data_inicio)]
+
+        if data_fim is not None:
+            df = df[df["CARIMBO"] <= pd.Timestamp(data_fim)]
 
         # Mostrar tabela filtrada
         #df.drop(columns=['CREATED_AT'], inplace=True)
