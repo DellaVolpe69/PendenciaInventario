@@ -506,6 +506,7 @@ if st.session_state.pagina == "Cadastrar":
     nfe = ""
     obs = ""
     email = ""
+    entrada = ""
     ############################################
     
     # -----------------------------------
@@ -564,6 +565,8 @@ if st.session_state.pagina == "Cadastrar":
 
     elif estado_da_etiqueta == "Sem Etiqueta":
         
+        entrada = ""
+        
         chave = ""
         
         fornecedor = st.text_input("Nome do Fornecedor:")
@@ -575,6 +578,8 @@ if st.session_state.pagina == "Cadastrar":
     ############################################
     
     elif estado_da_etiqueta == "Etiqueta sem QRCode":
+        
+        entrada = ""
         
         chave = ""
         
