@@ -770,6 +770,8 @@ elif st.session_state.pagina == "Editar":
         id_registro = st.selectbox("Selecione o ID para editar/excluir", df["ID"].sort_values(ascending=False))
 
         registro = df[df["ID"] == id_registro].iloc[0]
+        
+        prefixo = f"PendenciasInventario/{id_registro}"
 
         anexos = meu_minio.listar_anexos("formularios", prefixo)
         
