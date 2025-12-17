@@ -564,6 +564,8 @@ if st.session_state.pagina == "Cadastrar":
 
     elif estado_da_etiqueta == "Sem Etiqueta":
         
+        chave = ""
+        
         fornecedor = st.text_input("Nome do Fornecedor:")
         
         nfe = st.text_input("Número da NF-e:")
@@ -573,6 +575,8 @@ if st.session_state.pagina == "Cadastrar":
     ############################################
     
     elif estado_da_etiqueta == "Etiqueta sem QRCode":
+        
+        chave = ""
         
         fornecedor_cnpj = st.text_input("CNPJ do Fornecedor:")
         
