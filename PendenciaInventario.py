@@ -768,6 +768,8 @@ elif st.session_state.pagina == "Editar":
 
         if filtro_filial != "Todas":
             df = df[df["FILIAL"] == filtro_filial]
+            
+        df["CARIMBO"] = pd.to_datetime(df["CARIMBO"], errors="coerce")
 
         if data_inicio:
             df = df[pd.to_datetime(df["CARIMBO"]) >= pd.to_datetime(data_inicio)]
