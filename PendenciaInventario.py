@@ -179,20 +179,20 @@ st.markdown(f"""
 
         .stButton > button {{
             background-color: #FF5D01 !important;
-            color: white !important;
+            color: #EDEBE6 !important;
             border: 2px solid white !important;
             padding: 0.6em 1.2em;
             border-radius: 10px !important;
             font-size: 1rem;
             font-weight: 500;
-            font-color: white !important;
+            font-color: #EDEBE6 !important;
             cursor: pointer;
             transition: 0.2s ease;
             text-decoration: none !important;   /* 👈 AQUI remove de vez */
             display: inline-block;
         }}
         .stButton > button:hover {{
-            background-color: white !important;
+            background-color: #993700 !important;
             color: #FF5D01 !important;
             transform: scale(1.03);
             font-color: #FF5D01 !important;
