@@ -116,7 +116,7 @@ from Modulos import ConectionSupaBase
 ###################################
 import Modulos.Minio.examples.MinIO as meu_minio
 
-#from Modulos.Minio.examples.MinIO import read_file  # ajuste o caminho se necessário
+from Modulos.Minio.examples.MinIO import read_file  # ajuste o caminho se necessário
 
 @st.cache_data(show_spinner="Carregando FILIAL...")
 def load_filial():
