@@ -335,19 +335,13 @@ def extrair_dados(texto: str) -> dict:
 
 # Função para limpar campos invisíveis
 def limpar_campos():
-    tipo_atual = st.session_state.get("tipo")
+    st.session_state.scanner_ativo = False
+    st.session_state.xml_qr = ""
+    st.session_state.dados_nota = {}
 
-    # Se NÃO for FAIXA → limpa faixa_km_inicio e faixa_km_fim
-    # if tipo_atual != "FAIXA":
-    #     st.session_state["faixa_km_inicio"] = "NAO SE APLICA"
-    #     st.session_state["faixa_km_fim"] = "NAO SE APLICA"
-        
-    # Se NÃO for TABELA → limpa cidade_origem, uf_origem, cidade_destino, uf_destino
-    # if tipo_atual != "TABELA":
-    #     st.session_state["cidade_origem"] = "NAO SE APLICA"
-    #     st.session_state["uf_origem"] = "NAO SE APLICA"
-    #     st.session_state["cidade_destino"] = "NAO SE APLICA"
-    #     st.session_state["uf_destino"] = "NAO SE APLICA"
+    for campo in ["chave", "nfe", "pedido", "volume"]:
+        if campo in st.session_state:
+            del st.session_state[campo]
     
 # Função para verificar se já existe um cadastro igual
 def verificar_existencia(referencia_medicao, incoterms, prioridade, tipo_carga, vigencia_inicio):
@@ -602,6 +596,7 @@ if st.session_state.pagina == "Cadastrar":
 
         with col1:
             if st.button("Voltar ao Menu", use_container_width=True):
+                limpar_campos()   # 🔥 limpa QR, campos e scanner
                 st.session_state.pagina = "menu"
                 st.rerun()
                 st.stop() 
