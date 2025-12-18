@@ -111,7 +111,7 @@ if str(modulos_dir) not in sys.path:
     sys.path.insert(0, str(modulos_dir))
 
 # Agora importa o módulo normalmente
-#from Modulos import AzureLogin
+from Modulos import AzureLogin
 from Modulos import ConectionSupaBase
 ###################################
 import Modulos.Minio.examples.MinIO as meu_minio
@@ -360,62 +360,6 @@ def verificar_existencia(referencia_medicao, incoterms, prioridade, tipo_carga, 
     return len(result.data) > 0
 
 ###########################################################################
-
-# Função para verificar se já existe um cadastro igual para Faixa
-def verificar_existencia_faixa(referencia_medicao, incoterms, faixa_km_inicio, faixa_km_fim, vigencia_inicio, tipo):
-    result = (
-        supabase.table("Pendencias_Inventario")
-        .select("ID")
-        .eq("REFERENCIA_MEDICAO", referencia_medicao)
-        .eq("INCOTERMS", incoterms)
-        .eq("FAIXA_KMINICIO", faixa_km_inicio)
-        .eq("FAIXA_KMFIM", faixa_km_fim)
-        .eq("VIGENCIA_INICIO", vigencia_inicio)
-        .eq("TIPO", tipo)
-        .execute()
-    )
-
-    # Se encontrar alguma linha → já existe
-    return len(result.data) > 0
-
-###########################################################################
-
-# Função para verificar se já existe um cadastro igual para Km
-def verificar_existencia_km(referencia_medicao, incoterms, vigencia_inicio, tipo):
-    result = (
-        supabase.table("Pendencias_Inventario")
-        .select("ID")
-        .eq("REFERENCIA_MEDICAO", referencia_medicao)
-        .eq("INCOTERMS", incoterms)
-        .eq("VIGENCIA_INICIO", vigencia_inicio)
-        .eq("TIPO", tipo)
-        .execute()
-    )
-
-    # Se encontrar alguma linha → já existe
-    return len(result.data) > 0
-
-###########################################################################
-
-# Função para verificar se já existe um cadastro igual para Tabela
-def verificar_existencia_tabela(referencia_medicao, incoterms, uf_origem, cidade_origem, uf_destino, cidade_destino, vigencia_inicio, tipo):
-    result = (
-        supabase.table("Pendencias_Inventario")
-        .select("ID")
-        .eq("REFERENCIA_MEDICAO", referencia_medicao)
-        .eq("INCOTERMS", incoterms)
-        .eq("UF_ORIGEM", uf_origem)
-        .eq("CIDADE_ORIGEM", cidade_origem)
-        .eq("UF_DESTINO", uf_destino)
-        .eq("CIDADE_DESTINO", cidade_destino)        
-        .eq("VIGENCIA_INICIO", vigencia_inicio)
-        .eq("TIPO", tipo)
-        .execute()
-    )
-
-    # Se encontrar alguma linha → já existe
-    return len(result.data) > 0
-
 ###########################################################################
 
 #df_filial = MinIO.read_file('dados/CV_FILIAL.parquet', 'calculation-view')[['SALESORG', 'TXTMD_1']].drop_duplicates().reset_index(drop=True)
@@ -634,7 +578,7 @@ if st.session_state.pagina == "Cadastrar":
                         chave=chave,
                         pedido=pedido,
                         volume=volume,
-                        email=email,
+                        email=st.session_state.get("mail", "desconhecido"),
                         filial=filial
                     )
                     novo_id = res.data[0]["ID"]
