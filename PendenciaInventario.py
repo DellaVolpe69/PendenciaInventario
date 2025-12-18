@@ -578,7 +578,7 @@ if st.session_state.pagina == "Cadastrar":
                         chave=chave,
                         pedido=pedido,
                         volume=volume,
-                        email=st.session_state.get("mail", "desconhecido"),
+                        email=st.session_state.get("user_name", "desconhecido"),
                         filial=filial
                     )
                     novo_id = res.data[0]["ID"]
