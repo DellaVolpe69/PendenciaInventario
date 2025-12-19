@@ -353,7 +353,7 @@ def extrair_dados_chave(entrada: str) -> dict:
     return {
         "nfe": entrada[:9],
         "coleta": entrada[-20:-10],
-        "fornecedor_cnpj": entrada[12:14],
+        "fornecedor_cnpj": entrada[12:-14],
         "volume": f"{int(entrada[-6:-3])};{int(entrada[-3:])}"
     }
 
