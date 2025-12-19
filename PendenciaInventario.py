@@ -521,7 +521,7 @@ if st.session_state.pagina == "Cadastrar":
             qr = st.session_state.entrada_xml
             
         else:
-            st.warning("⚠️ Número incorreto de caracteres na entrada. Deve ser 34 ou 48 dígitos.")
+            st.warning("⚠️ Preencha com 34 ou 48 dígitos.")
 
     ############################################
 
