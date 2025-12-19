@@ -336,8 +336,8 @@ def extrair_dados(texto: str) -> dict:
 # Função para limpar campos invisíveis
 def limpar_campos():
     st.session_state.dados_nota = {}
-    # Limpa o textarea do XML
-    st.session_state["entrada_xml"] = ""
+    # 🔥 Remove o valor do textarea com segurança
+    st.session_state.pop("entrada_xml", None)
 
     for campo in ["chave", "nfe", "pedido", "volume"]:
         if campo in st.session_state:
