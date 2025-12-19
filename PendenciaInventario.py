@@ -588,8 +588,9 @@ if st.session_state.pagina == "Cadastrar":
                     #st.session_state.pagina = "Sucesso"  # vai pra página oculta
                     st.success("✅ Registro atualizado com sucesso!")
                     st.balloons()
+                    time.sleep(1.5)
                     limpar_campos()
-                    st.stop()  
+                    st.rerun() 
                     
                 else:
                     st.warning("⚠️ Preencha todos os campos obrigatórios.")
