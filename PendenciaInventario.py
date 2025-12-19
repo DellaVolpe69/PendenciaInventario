@@ -477,7 +477,7 @@ if st.session_state.pagina == "Cadastrar":
     ############################################
         
         entrada = st.text_area(
-            "Conteúdo do QR Code / XML",
+            "Conteúdo do Código / XML",
             #value=st.session_state.xml_qr,
             height=150
         )
@@ -559,7 +559,7 @@ if st.session_state.pagina == "Cadastrar":
             
             if st.button("💾 Salvar", use_container_width=True):
 
-                if nfe and matricula and uploaded_files:
+                if nfe and matricula:
 
                     #################################################
                     
@@ -606,11 +606,15 @@ if st.session_state.pagina == "Cadastrar":
                         # Remove o arquivo temporário
                         os.remove(temp_path)
 
-                    st.session_state.pagina = "Sucesso"  # vai pra página oculta
+                    #st.session_state.pagina = "Sucesso"  # vai pra página oculta
+                    st.success("✅ Registro atualizado com sucesso!")
+                    st.balloons()
+                    
                 else:
                     st.warning("⚠️ Preencha todos os campos obrigatórios.")
                 st.rerun()
                 st.stop() 
+                entrada = ""
                     
         ########################################################################################             
 
