@@ -342,7 +342,18 @@ def limpar_campos():
     for campo in ["entrada", "chave", "nfe", "pedido", "volume"]:
         if campo in st.session_state:
             del st.session_state[campo]
-    
+
+def extrair_dados_chave(entrada: str) -> dict:
+
+    if not entrada.isdigit() or len(entrada) != 48:
+        return {}
+
+    return {
+        "nfe": entrada[:9],
+        "coleta": entrada[-12:-6],
+        "volume": f"{int(entrada[-6:-3])};{int(entrada[-3:])}"
+    }
+
 # Função para verificar se já existe um cadastro igual
 def verificar_existencia(referencia_medicao, incoterms, prioridade, tipo_carga, vigencia_inicio):
     result = (
@@ -464,7 +475,7 @@ if st.session_state.pagina == "Cadastrar":
         )
 
         if st.session_state.entrada_xml:
-            st.session_state.dados_nota = extrair_dados(st.session_state.entrada_xml)
+            st.session_state.dados_nota = extrair_dados_chave(st.session_state.entrada_xml)
 
             dados = st.session_state.dados_nota
 
@@ -520,7 +531,8 @@ if st.session_state.pagina == "Cadastrar":
         </style>
     """, unsafe_allow_html=True)
     
-    uploaded_files = st.file_uploader("Anexos", accept_multiple_files=True)
+    if status != "ARMAZEM":
+        uploaded_files = st.file_uploader("Anexos", accept_multiple_files=True)
     
     # Criar espaço vazio nas laterais e centralizar os botões
     esp1, centro, esp2 = st.columns([1, 2, 1])
