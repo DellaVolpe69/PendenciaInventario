@@ -581,28 +581,29 @@ if st.session_state.pagina == "Cadastrar":
                     novo_id = res.data[0]["ID"]
                     
                     # 2) Upload dos anexos
-                    anexos_nomes = []
+                    if uploaded_files:
+                        anexos_nomes = []
 
-                    for idx, file in enumerate(uploaded_files, start=1):
-                        ext = file.name.split(".")[-1]
-                        nome_minio = f"{novo_id}_{idx}.{ext}"
+                        for idx, file in enumerate(uploaded_files, start=1):
+                            ext = file.name.split(".")[-1]
+                            nome_minio = f"{novo_id}_{idx}.{ext}"
 
-                        # Salvar temporariamente o arquivo
-                        with tempfile.NamedTemporaryFile(delete=False) as tmp:
-                            tmp.write(file.getvalue())
-                            temp_path = tmp.name  # caminho do arquivo salvo
+                            # Salvar temporariamente o arquivo
+                            with tempfile.NamedTemporaryFile(delete=False) as tmp:
+                                tmp.write(file.getvalue())
+                                temp_path = tmp.name  # caminho do arquivo salvo
 
-                        # Enviar ao MinIO
-                        meu_minio.upload(
-                            object_name="PendenciasInventario/"+ nome_minio,
-                            bucket_name="formularios",
-                            file_path=temp_path
-                        )
+                            # Enviar ao MinIO
+                            meu_minio.upload(
+                                object_name="PendenciasInventario/"+ nome_minio,
+                                bucket_name="formularios",
+                                file_path=temp_path
+                            )
 
-                        anexos_nomes.append(nome_minio)
+                            anexos_nomes.append(nome_minio)
 
-                        # Remove o arquivo temporário
-                        os.remove(temp_path)
+                            # Remove o arquivo temporário
+                            os.remove(temp_path)
 
                     #st.session_state.pagina = "Sucesso"  # vai pra página oculta
                     st.success("✅ Registro atualizado com sucesso!")
