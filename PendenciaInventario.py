@@ -345,7 +345,7 @@ def limpar_campos():
         if campo in st.session_state:
             del st.session_state[campo]
 
-def extrair_dados_chave(entrada: str) -> dict:
+def extrair_dados_chave_48(entrada: str) -> dict:
 
     if not entrada.isdigit() or len(entrada) != 48:
         return {}
@@ -477,8 +477,8 @@ if st.session_state.pagina == "Cadastrar":
             key="entrada_xml"
         )
 
-        if st.session_state.entrada_xml:
-            st.session_state.dados_nota = extrair_dados_chave(st.session_state.entrada_xml)
+        if st.session_state.entrada_xml and entrada and len(entrada) == 48:
+            st.session_state.dados_nota = extrair_dados_chave_48(st.session_state.entrada_xml)
 
             dados = st.session_state.dados_nota
 
