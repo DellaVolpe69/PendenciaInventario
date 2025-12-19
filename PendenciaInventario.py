@@ -535,7 +535,7 @@ if st.session_state.pagina == "Cadastrar":
     """, unsafe_allow_html=True)
     
     if status != "ARMAZEM":
-        uploaded_files = st.file_uploader("Anexos", accept_multiple_files=True)
+        uploaded_files = st.file_uploader("Anexos", accept_multiple_files=True, key="uploaded_files")
     
     # Criar espaço vazio nas laterais e centralizar os botões
     esp1, centro, esp2 = st.columns([1, 2, 1])
@@ -581,6 +581,8 @@ if st.session_state.pagina == "Cadastrar":
                     novo_id = res.data[0]["ID"]
                     
                     # 2) Upload dos anexos
+                    uploaded_files = st.session_state.get("uploaded_files", [])
+                    
                     if uploaded_files:
                         anexos_nomes = []
 
