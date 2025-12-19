@@ -481,14 +481,12 @@ if st.session_state.pagina == "Cadastrar":
 
             dados = st.session_state.dados_nota
 
-            coleta = st.session_state["coleta"] = dados.get("coleta", "")
             nfe = st.session_state["nfe"] = dados.get("nfe", "")
-            pedido = st.session_state["pedido"] = dados.get("pedido", "")
+            coleta = st.session_state["coleta"] = dados.get("coleta", "")
             volume = st.session_state["volume"] = dados.get("volume", "")
 
-            st.text_input("Coleta:", key="coleta", disabled=True)
             st.text_input("Número da NF-e:", key="nfe", disabled=True)
-            st.text_input("Pedido", key="pedido", disabled=True)
+            st.text_input("Coleta:", key="coleta", disabled=True)
             st.text_input("Volume:", key="volume", disabled=True)
 
             qr = st.session_state.entrada_xml
