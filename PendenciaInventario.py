@@ -341,7 +341,7 @@ def limpar_campos():
     # 🔥 Remove o valor do textarea com segurança
     st.session_state.pop("entrada_xml", None)
 
-    for campo in ["entrada", "chave", "nfe", "pedido", "volume"]:
+    for campo in ["entrada", "chave", "nfe", "pedido", "volume", "coleta", "fornecedor_cnpj"]:
         if campo in st.session_state:
             del st.session_state[campo]
 
@@ -354,6 +354,17 @@ def extrair_dados_chave_48(entrada: str) -> dict:
         "nfe": entrada[:9],
         "coleta": entrada[-20:-10],
         "fornecedor_cnpj": entrada[12:26],
+        "volume": f"{int(entrada[-6:-3])};{int(entrada[-3:])}"
+    }
+    
+def extrair_dados_chave_34(entrada: str) -> dict:
+
+    if not entrada.isdigit() or len(entrada) != 34:
+        return {}
+
+    return {
+        "nfe": entrada[:9],
+        "coleta": entrada[-20:-10],
         "volume": f"{int(entrada[-6:-3])};{int(entrada[-3:])}"
     }
 
@@ -490,6 +501,21 @@ if st.session_state.pagina == "Cadastrar":
             st.text_input("Número da NF-e:", key="nfe", disabled=True)
             st.text_input("Coleta:", key="coleta", disabled=True)
             st.text_input("CNPJ do Fornecedor:", key="fornecedor_cnpj", disabled=True)
+            st.text_input("Volume:", key="volume", disabled=True)
+
+            qr = st.session_state.entrada_xml
+            
+        elif st.session_state.entrada_xml and entrada and len(entrada) == 34:
+            st.session_state.dados_nota = extrair_dados_chave_48(st.session_state.entrada_xml)
+
+            dados = st.session_state.dados_nota
+
+            nfe = st.session_state["nfe"] = dados.get("nfe", "")
+            coleta = st.session_state["coleta"] = dados.get("coleta", "")
+            volume = st.session_state["volume"] = dados.get("volume", "")
+
+            st.text_input("Número da NF-e:", key="nfe", disabled=True)
+            st.text_input("Coleta:", key="coleta", disabled=True)
             st.text_input("Volume:", key="volume", disabled=True)
 
             qr = st.session_state.entrada_xml
