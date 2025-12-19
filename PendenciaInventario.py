@@ -340,8 +340,6 @@ def limpar_campos():
     st.session_state.dados_nota = {}
     # 🔥 Remove o valor do textarea com segurança
     st.session_state.pop("entrada_xml", None)
-    # 🔥 limpa o file_uploader corretamente
-    st.session_state["uploaded_files"] = []
 
     for campo in ["entrada", "chave", "nfe", "pedido", "volume"]:
         if campo in st.session_state:
