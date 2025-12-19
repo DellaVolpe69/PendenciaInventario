@@ -353,6 +353,7 @@ def extrair_dados_chave(entrada: str) -> dict:
     return {
         "nfe": entrada[:9],
         "coleta": entrada[-20:-10],
+        "fornecedor_cnpj": entrada[-36:14],
         "volume": f"{int(entrada[-6:-3])};{int(entrada[-3:])}"
     }
 
@@ -483,10 +484,12 @@ if st.session_state.pagina == "Cadastrar":
 
             nfe = st.session_state["nfe"] = dados.get("nfe", "")
             coleta = st.session_state["coleta"] = dados.get("coleta", "")
+            fornecedor_cnpj = st.session_state["fornecedor_cnpj"] = dados.get("fornecedor_cnpj", "")
             volume = st.session_state["volume"] = dados.get("volume", "")
 
             st.text_input("Número da NF-e:", key="nfe", disabled=True)
             st.text_input("Coleta:", key="coleta", disabled=True)
+            st.text_input("CNPJ do Fornecedor:", key="fornecedor_cnpj", disabled=True)
             st.text_input("Volume:", key="volume", disabled=True)
 
             qr = st.session_state.entrada_xml
