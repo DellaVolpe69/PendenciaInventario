@@ -272,7 +272,8 @@ def inserir_registro(
     pedido, 
     volume, 
     email,
-    filial
+    filial,
+    coleta
 ):
 
     # -----------------------------
@@ -292,7 +293,8 @@ def inserir_registro(
         "PEDIDO": pedido,
         "VOLUME": volume,
         "EMAIL": email,
-        "FILIAL": filial
+        "FILIAL": filial,
+        "COLETA": coleta
     }).execute()
     
     return res
@@ -479,12 +481,12 @@ if st.session_state.pagina == "Cadastrar":
 
             dados = st.session_state.dados_nota
 
-            chave = st.session_state["chave"] = dados.get("chave", "")
+            coleta = st.session_state["coleta"] = dados.get("coleta", "")
             nfe = st.session_state["nfe"] = dados.get("nfe", "")
             pedido = st.session_state["pedido"] = dados.get("pedido", "")
             volume = st.session_state["volume"] = dados.get("volume", "")
 
-            st.text_input("Chave NF-e:", key="chave", disabled=True)
+            st.text_input("Coleta:", key="coleta", disabled=True)
             st.text_input("Número da NF-e:", key="nfe", disabled=True)
             st.text_input("Pedido", key="pedido", disabled=True)
             st.text_input("Volume:", key="volume", disabled=True)
