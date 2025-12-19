@@ -506,7 +506,7 @@ if st.session_state.pagina == "Cadastrar":
             qr = st.session_state.entrada_xml
             
         elif st.session_state.entrada_xml and entrada and len(entrada) == 34:
-            st.session_state.dados_nota = extrair_dados_chave_48(st.session_state.entrada_xml)
+            st.session_state.dados_nota = extrair_dados_chave_34(st.session_state.entrada_xml)
 
             dados = st.session_state.dados_nota
 
