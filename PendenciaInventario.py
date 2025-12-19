@@ -399,11 +399,11 @@ if st.session_state.pagina == "Cadastrar":
 )
     
     # Inicializa estado
-    if "scanner_ativo" not in st.session_state:
-        st.session_state.scanner_ativo = False
+    # if "scanner_ativo" not in st.session_state:
+    #     st.session_state.scanner_ativo = False
 
-    if "xml_qr" not in st.session_state:
-        st.session_state.xml_qr = ""
+    # if "xml_qr" not in st.session_state:
+    #     st.session_state.xml_qr = ""
 
     if "dados_nota" not in st.session_state:
         st.session_state.dados_nota = {}
@@ -453,20 +453,20 @@ if st.session_state.pagina == "Cadastrar":
     if estado_da_etiqueta == "Normal":
 
         # Botão para abrir o leitor
-        if st.button("📷 Abrir leitor de QR Code", use_container_width=True):
-            st.session_state.scanner_ativo = True
+        # if st.button("📷 Abrir leitor de QR Code", use_container_width=True):
+        #     st.session_state.scanner_ativo = True
 
-        if st.session_state.scanner_ativo:
-            if st.button("❌ Fechar leitor", use_container_width=True):
-                st.session_state.scanner_ativo = False
+        # if st.session_state.scanner_ativo:
+        #     if st.button("❌ Fechar leitor", use_container_width=True):
+        #         st.session_state.scanner_ativo = False
                 
-            qr_data = qrcode_scanner(key="scanner")
+        #     qr_data = qrcode_scanner(key="scanner")
 
-            if qr_data:
-                st.success("QR Code lido com sucesso!")
-                st.session_state.xml_qr = qr_data
-                st.session_state.dados_nota = extrair_dados(qr_data)
-                st.session_state.scanner_ativo = False
+        #     if qr_data:
+        #         st.success("QR Code lido com sucesso!")
+        #         st.session_state.xml_qr = qr_data
+        #         st.session_state.dados_nota = extrair_dados(qr_data)
+        #         st.session_state.scanner_ativo = False
 
                 # # Campo preenchido automaticamente
                 # chave_nfe = st.text_input(
