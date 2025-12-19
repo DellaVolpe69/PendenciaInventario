@@ -453,6 +453,9 @@ if st.session_state.pagina == "Cadastrar":
     if estado_da_etiqueta == "Normal":
     
     ############################################
+    
+        if "entrada_xml" not in st.session_state:
+            st.session_state.entrada_xml = ""
         
         entrada = st.text_area(
             "Conteúdo do Código / XML",
