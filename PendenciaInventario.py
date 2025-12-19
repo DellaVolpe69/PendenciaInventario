@@ -335,9 +335,9 @@ def extrair_dados(texto: str) -> dict:
 
 # Função para limpar campos invisíveis
 def limpar_campos():
-    st.session_state.scanner_ativo = False
-    st.session_state.xml_qr = ""
     st.session_state.dados_nota = {}
+    # Limpa o textarea do XML
+    st.session_state["entrada_xml"] = ""
 
     for campo in ["chave", "nfe", "pedido", "volume"]:
         if campo in st.session_state:
@@ -451,42 +451,20 @@ if st.session_state.pagina == "Cadastrar":
     # Lógica da tela
     # -----------------------------------
     if estado_da_etiqueta == "Normal":
-
-        # Botão para abrir o leitor
-        # if st.button("📷 Abrir leitor de QR Code", use_container_width=True):
-        #     st.session_state.scanner_ativo = True
-
-        # if st.session_state.scanner_ativo:
-        #     if st.button("❌ Fechar leitor", use_container_width=True):
-        #         st.session_state.scanner_ativo = False
-                
-        #     qr_data = qrcode_scanner(key="scanner")
-
-        #     if qr_data:
-        #         st.success("QR Code lido com sucesso!")
-        #         st.session_state.xml_qr = qr_data
-        #         st.session_state.dados_nota = extrair_dados(qr_data)
-        #         st.session_state.scanner_ativo = False
-
-                # # Campo preenchido automaticamente
-                # chave_nfe = st.text_input(
-                #     "Chave NF-e",
-                #     value=st.session_state.chave_nfe
-                # )
     
     ############################################
         
         entrada = st.text_area(
             "Conteúdo do Código / XML",
-            #value=st.session_state.xml_qr,
-            height=150
+            height=150,
+            key="entrada_xml"
         )
 
-        if entrada:
-            st.session_state.dados_nota = extrair_dados(entrada)
+        if st.session_state.entrada_xml:
+            st.session_state.dados_nota = extrair_dados(st.session_state.entrada_xml)
 
             dados = st.session_state.dados_nota
-            
+
             chave = st.session_state["chave"] = dados.get("chave", "")
             nfe = st.session_state["nfe"] = dados.get("nfe", "")
             pedido = st.session_state["pedido"] = dados.get("pedido", "")
@@ -496,7 +474,8 @@ if st.session_state.pagina == "Cadastrar":
             st.text_input("Número da NF-e:", key="nfe", disabled=True)
             st.text_input("Pedido", key="pedido", disabled=True)
             st.text_input("Volume:", key="volume", disabled=True)
-            qr = entrada
+
+            qr = st.session_state.entrada_xml
 
     ############################################
 
@@ -610,6 +589,7 @@ if st.session_state.pagina == "Cadastrar":
                     st.success("✅ Registro atualizado com sucesso!")
                     st.balloons()
                     limpar_campos()
+                    st.stop()
                     
                 else:
                     st.warning("⚠️ Preencha todos os campos obrigatórios.")
