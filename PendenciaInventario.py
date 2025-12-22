@@ -343,7 +343,7 @@ def limpar_campos():
     # 🔥 Remove o valor do textarea com segurança
     st.session_state.pop("entrada_xml", None)
 
-    for campo in ["entrada", "chave", "nfe", "pedido", "volume", "coleta", "fornecedor_cnpj"]:
+    for campo in ["entrada", "chave", "nfe", "pedido", "volume", "coleta", "fornecedor_cnpj", "etiqueta"]:
         if campo in st.session_state:
             del st.session_state[campo]
 
@@ -372,7 +372,11 @@ def extrair_dados_chave_34(entrada: str) -> dict:
     
 def extrair_dados_chave_27(entrada: str) -> dict:
 
-    if not entrada.isdigit() or len(entrada) != 27:
+    if len(entrada) != 27:
+        return {}
+    
+    # valida se os trechos numéricos realmente são números
+    if not entrada[1:7].isdigit() or not entrada[-11:].isdigit():
         return {}
 
     return {
