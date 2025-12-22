@@ -486,6 +486,7 @@ if st.session_state.pagina == "Cadastrar":
     obs = ""
     email = ""
     entrada = ""
+    coleta = ""
     etiqueta = ""
     ############################################
     
