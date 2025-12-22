@@ -615,7 +615,7 @@ if st.session_state.pagina == "Cadastrar":
             
             if st.button("💾 Salvar", use_container_width=True):
 
-                if nfe and matricula:
+                if matricula:
 
                     #################################################
                     
