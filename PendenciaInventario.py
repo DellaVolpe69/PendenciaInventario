@@ -273,7 +273,8 @@ def inserir_registro(
     volume, 
     email,
     filial,
-    coleta
+    coleta,
+    etiqueta
 ):
 
     # -----------------------------
@@ -294,7 +295,8 @@ def inserir_registro(
         "VOLUME": volume,
         "EMAIL": email,
         "FILIAL": filial,
-        "COLETA": coleta
+        "COLETA": coleta,
+        "ETIQUETA": etiqueta
     }).execute()
     
     return res
@@ -366,6 +368,16 @@ def extrair_dados_chave_34(entrada: str) -> dict:
         "nfe": entrada[:9],
         "coleta": entrada[-20:-10],
         "volume": f"{int(entrada[-6:-3])};{int(entrada[-3:])}"
+    }
+    
+def extrair_dados_chave_27(entrada: str) -> dict:
+
+    if not entrada.isdigit() or len(entrada) != 27:
+        return {}
+
+    return {
+        "etiqueta": entrada[-11:],
+        "volume": f"{int(entrada[4:7])};{int(entrada[1:4])}"
     }
 
 # Função para verificar se já existe um cadastro igual
@@ -470,6 +482,7 @@ if st.session_state.pagina == "Cadastrar":
     obs = ""
     email = ""
     entrada = ""
+    etiqueta = ""
     ############################################
     
     # -----------------------------------
@@ -520,8 +533,21 @@ if st.session_state.pagina == "Cadastrar":
 
             qr = st.session_state.entrada_xml
             
+        elif st.session_state.entrada_xml and entrada and len(entrada) == 27:
+            st.session_state.dados_nota = extrair_dados_chave_27(st.session_state.entrada_xml)
+
+            dados = st.session_state.dados_nota
+
+            etiqueta = st.session_state["etiqueta"] = dados.get("etiqueta", "")
+            volume = st.session_state["volume"] = dados.get("volume", "")
+
+            st.text_input("Número da Etiqueta:", key="etiqueta", disabled=True)
+            st.text_input("Volume:", key="volume", disabled=True)
+
+            qr = st.session_state.entrada_xml
+            
         else:
-            st.warning("⚠️ Preencha com 34 ou 48 dígitos.")
+            st.warning("⚠️ Preencha com um código válido de 48, 34 ou 27 dígitos.")
 
     ############################################
 
@@ -606,7 +632,8 @@ if st.session_state.pagina == "Cadastrar":
                         #email=st.session_state.get("user_email", "desconhecido"),
                         email=email,
                         filial=filial,
-                        coleta=coleta
+                        coleta=coleta,
+                        etiqueta=etiqueta
                     )
                     novo_id = res.data[0]["ID"]
                     
