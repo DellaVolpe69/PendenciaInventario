@@ -616,7 +616,7 @@ if st.session_state.pagina == "Cadastrar":
             
             if st.button("💾 Salvar", use_container_width=True):
 
-                if matricula:
+                if matricula and (len(entrada) == 34 or len(entrada) == 48 or len(entrada) == 27):
 
                     #################################################
                     
