@@ -432,12 +432,17 @@ if st.session_state.pagina == "menu":
 
 # --- PÁGINA CADASTRAR ---
 if st.session_state.pagina == "Cadastrar":
+
+    # Criar espaço vazio nas laterais e centralizar os botões
+    esp1A, centro1, esp2A = st.columns([1, 2, 1])
+
+    with centro1:
     
-    if st.button("Voltar ao Menu", use_container_width=True):
-        limpar_campos()   # 🔥 limpa QR, campos e scanner
-        st.session_state.pagina = "menu"
-        st.rerun()
-        st.stop() 
+        if st.button("Voltar ao Menu", use_container_width=True):
+            limpar_campos()   # 🔥 limpa QR, campos e scanner
+            st.session_state.pagina = "menu"
+            st.rerun()
+            st.stop() 
         
     st.markdown(
     "<h1 style='text-align: center; color: #EDEBE6; text-shadow: 1px 1px 3px black;'>"
