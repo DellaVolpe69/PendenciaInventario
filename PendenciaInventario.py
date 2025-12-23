@@ -434,9 +434,9 @@ if st.session_state.pagina == "menu":
 if st.session_state.pagina == "Cadastrar":
 
     # Criar espaço vazio nas laterais e centralizar os botões
-    esp1A, centro1, esp2A = st.columns([1, 2, 1])
+    esp1A, centro1, esp2A = st.columns([1, 1, 1])
 
-    with centro1:
+    with esp1A:
     
         if st.button("Voltar ao Menu", use_container_width=True):
             limpar_campos()   # 🔥 limpa QR, campos e scanner
