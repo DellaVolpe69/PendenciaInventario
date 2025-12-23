@@ -432,6 +432,13 @@ if st.session_state.pagina == "menu":
 
 # --- PÁGINA CADASTRAR ---
 if st.session_state.pagina == "Cadastrar":
+    
+    if st.button("Voltar ao Menu", use_container_width=True):
+        limpar_campos()   # 🔥 limpa QR, campos e scanner
+        st.session_state.pagina = "menu"
+        st.rerun()
+        st.stop() 
+        
     st.markdown(
     "<h1 style='text-align: center; color: #EDEBE6; text-shadow: 1px 1px 3px black;'>"
     "📝 Pendências do Inventário"
@@ -601,87 +608,75 @@ if st.session_state.pagina == "Cadastrar":
     esp1, centro, esp2 = st.columns([1, 2, 1])
 
     with centro:
-        # Duas colunas de mesma largura para os botões
-        col1, col2 = st.columns([1, 1])
+           
+        if st.button("💾 Salvar", use_container_width=True):
 
-        with col1:
-            if st.button("Voltar ao Menu", use_container_width=True):
-                limpar_campos()   # 🔥 limpa QR, campos e scanner
-                st.session_state.pagina = "menu"
-                st.rerun()
-                st.stop() 
+            if matricula and (len(entrada) == 34 or len(entrada) == 48 or len(entrada) == 27):
 
-        with col2:
-            ############################################
-            
-            if st.button("💾 Salvar", use_container_width=True):
+                #################################################
+                
+                # 1) Salva o registro no Supabase                                                        
+                res = inserir_registro(
+                    fornecedor=fornecedor,
+                    fornecedor_cnpj=fornecedor_cnpj,
+                    nfe=nfe,
+                    status=status,
+                    obs=obs,
+                    criado_por=criado_por,
+                    matricula=matricula,
+                    estado_da_etiqueta=estado_da_etiqueta,
+                    qr=qr,
+                    chave=chave,
+                    pedido=pedido,
+                    volume=volume,
+                    #email=st.session_state.get("user_email", "desconhecido"),
+                    email=email,
+                    filial=filial,
+                    coleta=coleta,
+                    etiqueta=etiqueta
+                )
+                novo_id = res.data[0]["ID"]
+                
+                # 2) Upload dos anexos
+                uploaded_files = st.session_state.get("uploaded_files", [])
+                
+                if uploaded_files:
+                    anexos_nomes = []
 
-                if matricula and (len(entrada) == 34 or len(entrada) == 48 or len(entrada) == 27):
+                    for idx, file in enumerate(uploaded_files, start=1):
+                        ext = file.name.split(".")[-1]
+                        nome_minio = f"{novo_id}_{idx}.{ext}"
 
-                    #################################################
-                    
-                    # 1) Salva o registro no Supabase                                                        
-                    res = inserir_registro(
-                        fornecedor=fornecedor,
-                        fornecedor_cnpj=fornecedor_cnpj,
-                        nfe=nfe,
-                        status=status,
-                        obs=obs,
-                        criado_por=criado_por,
-                        matricula=matricula,
-                        estado_da_etiqueta=estado_da_etiqueta,
-                        qr=qr,
-                        chave=chave,
-                        pedido=pedido,
-                        volume=volume,
-                        #email=st.session_state.get("user_email", "desconhecido"),
-                        email=email,
-                        filial=filial,
-                        coleta=coleta,
-                        etiqueta=etiqueta
-                    )
-                    novo_id = res.data[0]["ID"]
-                    
-                    # 2) Upload dos anexos
-                    uploaded_files = st.session_state.get("uploaded_files", [])
-                    
-                    if uploaded_files:
-                        anexos_nomes = []
+                        # Salvar temporariamente o arquivo
+                        with tempfile.NamedTemporaryFile(delete=False) as tmp:
+                            tmp.write(file.getvalue())
+                            temp_path = tmp.name  # caminho do arquivo salvo
 
-                        for idx, file in enumerate(uploaded_files, start=1):
-                            ext = file.name.split(".")[-1]
-                            nome_minio = f"{novo_id}_{idx}.{ext}"
+                        # Enviar ao MinIO
+                        meu_minio.upload(
+                            object_name="PendenciasInventario/"+ nome_minio,
+                            bucket_name="formularios",
+                            file_path=temp_path
+                        )
 
-                            # Salvar temporariamente o arquivo
-                            with tempfile.NamedTemporaryFile(delete=False) as tmp:
-                                tmp.write(file.getvalue())
-                                temp_path = tmp.name  # caminho do arquivo salvo
+                        anexos_nomes.append(nome_minio)
 
-                            # Enviar ao MinIO
-                            meu_minio.upload(
-                                object_name="PendenciasInventario/"+ nome_minio,
-                                bucket_name="formularios",
-                                file_path=temp_path
-                            )
+                        # Remove o arquivo temporário
+                        os.remove(temp_path)
 
-                            anexos_nomes.append(nome_minio)
-
-                            # Remove o arquivo temporário
-                            os.remove(temp_path)
-
-                    #st.session_state.pagina = "Sucesso"  # vai pra página oculta
-                    st.success("✅ Registro atualizado com sucesso!")
-                    st.balloons()
-                    time.sleep(1.5)
-                    limpar_campos()
-                    st.rerun() 
-                    
-                else:
-                    st.warning("⚠️ Preencha todos os campos obrigatórios.")
-                #st.rerun()
-                #st.stop()                 
-                    
-        ########################################################################################             
+                #st.session_state.pagina = "Sucesso"  # vai pra página oculta
+                st.success("✅ Registro atualizado com sucesso!")
+                st.balloons()
+                time.sleep(1.5)
+                limpar_campos()
+                st.rerun() 
+                
+            else:
+                st.warning("⚠️ Preencha todos os campos obrigatórios.")
+            #st.rerun()
+            #st.stop()                 
+                
+    ########################################################################################             
 
 # --- PÁGINA EDITAR ---
 elif st.session_state.pagina == "Editar":
