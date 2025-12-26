@@ -615,69 +615,135 @@ if st.session_state.pagina == "Cadastrar":
     with centro:
            
         if st.button("💾 Salvar", use_container_width=True):
+            
+            if estado_da_etiqueta == "Normal":
 
-            if matricula and (len(entrada) == 34 or len(entrada) == 48 or len(entrada) == 27):
+                if matricula and (len(entrada) == 34 or len(entrada) == 48 or len(entrada) == 27):
 
-                #################################################
+                    #################################################
+                    
+                    # 1) Salva o registro no Supabase                                                        
+                    res = inserir_registro(
+                        fornecedor=fornecedor,
+                        fornecedor_cnpj=fornecedor_cnpj,
+                        nfe=nfe,
+                        status=status,
+                        obs=obs,
+                        criado_por=criado_por,
+                        matricula=matricula,
+                        estado_da_etiqueta=estado_da_etiqueta,
+                        qr=qr,
+                        chave=chave,
+                        pedido=pedido,
+                        volume=volume,
+                        #email=st.session_state.get("user_email", "desconhecido"),
+                        email=email,
+                        filial=filial,
+                        coleta=coleta,
+                        etiqueta=etiqueta
+                    )
+                    novo_id = res.data[0]["ID"]
+                    
+                    # 2) Upload dos anexos
+                    uploaded_files = st.session_state.get("uploaded_files", [])
+                    
+                    if uploaded_files:
+                        anexos_nomes = []
+
+                        for idx, file in enumerate(uploaded_files, start=1):
+                            ext = file.name.split(".")[-1]
+                            nome_minio = f"{novo_id}_{idx}.{ext}"
+
+                            # Salvar temporariamente o arquivo
+                            with tempfile.NamedTemporaryFile(delete=False) as tmp:
+                                tmp.write(file.getvalue())
+                                temp_path = tmp.name  # caminho do arquivo salvo
+
+                            # Enviar ao MinIO
+                            meu_minio.upload(
+                                object_name="PendenciasInventario/"+ nome_minio,
+                                bucket_name="formularios",
+                                file_path=temp_path
+                            )
+
+                            anexos_nomes.append(nome_minio)
+
+                            # Remove o arquivo temporário
+                            os.remove(temp_path)
+
+                    #st.session_state.pagina = "Sucesso"  # vai pra página oculta
+                    st.success("✅ Registro atualizado com sucesso!")
+                    #st.balloons()
+                    time.sleep(1.5)
+                    limpar_campos()
+                    st.rerun() 
                 
-                # 1) Salva o registro no Supabase                                                        
-                res = inserir_registro(
-                    fornecedor=fornecedor,
-                    fornecedor_cnpj=fornecedor_cnpj,
-                    nfe=nfe,
-                    status=status,
-                    obs=obs,
-                    criado_por=criado_por,
-                    matricula=matricula,
-                    estado_da_etiqueta=estado_da_etiqueta,
-                    qr=qr,
-                    chave=chave,
-                    pedido=pedido,
-                    volume=volume,
-                    #email=st.session_state.get("user_email", "desconhecido"),
-                    email=email,
-                    filial=filial,
-                    coleta=coleta,
-                    etiqueta=etiqueta
-                )
-                novo_id = res.data[0]["ID"]
-                
-                # 2) Upload dos anexos
-                uploaded_files = st.session_state.get("uploaded_files", [])
-                
-                if uploaded_files:
-                    anexos_nomes = []
-
-                    for idx, file in enumerate(uploaded_files, start=1):
-                        ext = file.name.split(".")[-1]
-                        nome_minio = f"{novo_id}_{idx}.{ext}"
-
-                        # Salvar temporariamente o arquivo
-                        with tempfile.NamedTemporaryFile(delete=False) as tmp:
-                            tmp.write(file.getvalue())
-                            temp_path = tmp.name  # caminho do arquivo salvo
-
-                        # Enviar ao MinIO
-                        meu_minio.upload(
-                            object_name="PendenciasInventario/"+ nome_minio,
-                            bucket_name="formularios",
-                            file_path=temp_path
-                        )
-
-                        anexos_nomes.append(nome_minio)
-
-                        # Remove o arquivo temporário
-                        os.remove(temp_path)
-
-                #st.session_state.pagina = "Sucesso"  # vai pra página oculta
-                st.success("✅ Registro atualizado com sucesso!")
-                #st.balloons()
-                time.sleep(1.5)
-                limpar_campos()
-                st.rerun() 
-                
+                else:
+                    st.warning("⚠️ Preencha todos os campos obrigatórios.")
+                    
             else:
-                st.warning("⚠️ Preencha todos os campos obrigatórios.")
+                if matricula:
+
+                    #################################################
+                    
+                    # 1) Salva o registro no Supabase                                                        
+                    res = inserir_registro(
+                        fornecedor=fornecedor,
+                        fornecedor_cnpj=fornecedor_cnpj,
+                        nfe=nfe,
+                        status=status,
+                        obs=obs,
+                        criado_por=criado_por,
+                        matricula=matricula,
+                        estado_da_etiqueta=estado_da_etiqueta,
+                        qr=qr,
+                        chave=chave,
+                        pedido=pedido,
+                        volume=volume,
+                        #email=st.session_state.get("user_email", "desconhecido"),
+                        email=email,
+                        filial=filial,
+                        coleta=coleta,
+                        etiqueta=etiqueta
+                    )
+                    novo_id = res.data[0]["ID"]
+                    
+                    # 2) Upload dos anexos
+                    uploaded_files = st.session_state.get("uploaded_files", [])
+                    
+                    if uploaded_files:
+                        anexos_nomes = []
+
+                        for idx, file in enumerate(uploaded_files, start=1):
+                            ext = file.name.split(".")[-1]
+                            nome_minio = f"{novo_id}_{idx}.{ext}"
+
+                            # Salvar temporariamente o arquivo
+                            with tempfile.NamedTemporaryFile(delete=False) as tmp:
+                                tmp.write(file.getvalue())
+                                temp_path = tmp.name  # caminho do arquivo salvo
+
+                            # Enviar ao MinIO
+                            meu_minio.upload(
+                                object_name="PendenciasInventario/"+ nome_minio,
+                                bucket_name="formularios",
+                                file_path=temp_path
+                            )
+
+                            anexos_nomes.append(nome_minio)
+
+                            # Remove o arquivo temporário
+                            os.remove(temp_path)
+
+                    #st.session_state.pagina = "Sucesso"  # vai pra página oculta
+                    st.success("✅ Registro atualizado com sucesso!")
+                    #st.balloons()
+                    time.sleep(1.5)
+                    limpar_campos()
+                    st.rerun() 
+                
+                else:
+                    st.warning("⚠️ Preencha todos os campos obrigatórios.")
             #st.rerun()
             #st.stop()                 
                 
