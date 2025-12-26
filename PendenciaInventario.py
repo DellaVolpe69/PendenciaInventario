@@ -756,6 +756,7 @@ if st.session_state.pagina == "Cadastrar":
                     #st.balloons()
                     time.sleep(1.5)
                     limpar_campos_2()
+                    obs = ""
                     st.rerun() 
                 
                 else:
