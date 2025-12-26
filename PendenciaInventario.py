@@ -353,6 +353,14 @@ def limpar_campos():
         "nfe_sem_qr", "obs_sem_qr", "fornecedor_sem_etiqueta", "fornecedor_cnpj_sem_qr"
     ]:
         st.session_state.pop(campo, None)
+        
+def limpar_campos_2():
+    for campo in [
+        "nfe_sem_etiqueta", "obs_sem_etiqueta",
+        "nfe_sem_qr", "obs_sem_qr", "fornecedor_sem_etiqueta",
+        "fornecedor_cnpj_sem_qr"
+    ]:
+        st.session_state.pop(campo, None)
 
 def extrair_dados_chave_48(entrada: str) -> dict:
 
@@ -747,7 +755,7 @@ if st.session_state.pagina == "Cadastrar":
                     st.success("✅ Registro atualizado com sucesso!")
                     #st.balloons()
                     time.sleep(1.5)
-                    limpar_campos()
+                    limpar_campos_2()
                     st.rerun() 
                 
                 else:
