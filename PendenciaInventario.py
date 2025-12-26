@@ -585,7 +585,9 @@ if st.session_state.pagina == "Cadastrar":
         
         nfe = st.text_input("Número da NF-e:",key="nfe_sem_etiqueta")
         
-        #obs = st.text_area("Observação:")
+        if "obs_sem_etiqueta" not in st.session_state:
+            st.session_state.obs_sem_etiqueta = ""
+            
         obs = st.text_area("Observação", key="obs_sem_etiqueta")
         
     ############################################
