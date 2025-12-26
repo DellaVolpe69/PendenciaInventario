@@ -349,7 +349,8 @@ def limpar_campos():
     for campo in [
         "entrada", "chave", "nfe", "pedido", "volume",
         "coleta", "fornecedor_cnpj", "etiqueta", "obs",
-        "uploaded_files"
+        "uploaded_files", "nfe_sem_etiqueta", "obs_sem_etiqueta",
+        "nfe_sem_qr", "obs_sem_qr", "fornecedor_sem_etiqueta", "fornecedor_cnpj_sem_qr"
     ]:
         st.session_state.pop(campo, None)
 
@@ -580,12 +581,12 @@ if st.session_state.pagina == "Cadastrar":
         
         chave = ""
         
-        fornecedor = st.text_input("Nome do Fornecedor:", key="fornecedor")
+        fornecedor = st.text_input("Nome do Fornecedor:", key="fornecedor_sem_etiqueta")
         
-        nfe = st.text_input("Número da NF-e:",key="nfe")
+        nfe = st.text_input("Número da NF-e:",key="nfe_sem_etiqueta")
         
         #obs = st.text_area("Observação:")
-        obs = st.text_area("Observação", key="obs")
+        obs = st.text_area("Observação", key="obs_sem_etiqueta")
         
     ############################################
     
@@ -595,11 +596,11 @@ if st.session_state.pagina == "Cadastrar":
         
         chave = ""
         
-        fornecedor_cnpj = st.text_input("CNPJ do Fornecedor:", key="fornecedor_cnpj")
+        fornecedor_cnpj = st.text_input("CNPJ do Fornecedor:", key="fornecedor_cnpj_sem_qr")
         
-        nfe = st.text_input("Número da NF-e:", key="nfe")
+        nfe = st.text_input("Número da NF-e:", key="nfe_sem_qr")
         
-        obs = st.text_area("Observação", key="obs")
+        obs = st.text_area("Observação", key="obs_sem_qr")
         
     ############################################
     
