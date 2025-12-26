@@ -761,7 +761,7 @@ if st.session_state.pagina == "Cadastrar":
                 
                 else:
                     st.warning("⚠️ Preencha todos os campos obrigatórios.")
-            #st.rerun()
+            st.rerun()
             #st.stop()                 
                 
     ########################################################################################             
