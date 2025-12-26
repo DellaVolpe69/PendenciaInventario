@@ -580,9 +580,9 @@ if st.session_state.pagina == "Cadastrar":
         
         chave = ""
         
-        fornecedor = st.text_input("Nome do Fornecedor:")
+        fornecedor = st.text_input("Nome do Fornecedor:", key="fornecedor")
         
-        nfe = st.text_input("Número da NF-e:")
+        nfe = st.text_input("Número da NF-e:",key="nfe")
         
         #obs = st.text_area("Observação:")
         obs = st.text_area("Observação", key="obs")
@@ -595,11 +595,11 @@ if st.session_state.pagina == "Cadastrar":
         
         chave = ""
         
-        fornecedor_cnpj = st.text_input("CNPJ do Fornecedor:")
+        fornecedor_cnpj = st.text_input("CNPJ do Fornecedor:", key="fornecedor_cnpj")
         
-        nfe = st.text_input("Número da NF-e:")
+        nfe = st.text_input("Número da NF-e:", key="nfe")
         
-        obs = st.text_area("Observação:")
+        obs = st.text_area("Observação", key="obs")
         
     ############################################
     
