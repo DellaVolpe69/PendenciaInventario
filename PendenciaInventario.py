@@ -343,7 +343,7 @@ def limpar_campos():
     # 🔥 Remove o valor do textarea com segurança
     st.session_state.pop("entrada_xml", None)
 
-    for campo in ["entrada", "chave", "nfe", "pedido", "volume", "coleta", "fornecedor_cnpj", "etiqueta"]:
+    for campo in ["entrada", "chave", "nfe", "pedido", "volume", "coleta", "fornecedor_cnpj", "etiqueta", "obs"]:
         if campo in st.session_state:
             del st.session_state[campo]
 
@@ -681,7 +681,7 @@ if st.session_state.pagina == "Cadastrar":
                 else:
                     st.warning("⚠️ Preencha todos os campos obrigatórios.")
                     
-            else:
+            elif estado_da_etiqueta != "Normal":
                 if matricula:
 
                     #################################################
