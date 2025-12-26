@@ -351,7 +351,7 @@ def limpar_campos():
         "coleta", "fornecedor_cnpj", "etiqueta", "obs",
         "uploaded_files"
     ]:
-        st.session_state[campo] = ""
+        st.session_state.pop(campo, None)
 
 def extrair_dados_chave_48(entrada: str) -> dict:
 
