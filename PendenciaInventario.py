@@ -343,9 +343,15 @@ def limpar_campos():
     # 🔥 Remove o valor do textarea com segurança
     st.session_state.pop("entrada_xml", None)
 
-    for campo in ["entrada", "chave", "nfe", "pedido", "volume", "coleta", "fornecedor_cnpj", "etiqueta", "obs"]:
-        if campo in st.session_state:
-            del st.session_state[campo]
+    # for campo in ["entrada", "chave", "nfe", "pedido", "volume", "coleta", "fornecedor_cnpj", "etiqueta", "obs"]:
+    #     if campo in st.session_state:
+    #         del st.session_state[campo]
+    for campo in [
+        "entrada", "chave", "nfe", "pedido", "volume",
+        "coleta", "fornecedor_cnpj", "etiqueta", "obs",
+        "uploaded_files"
+    ]:
+        st.session_state[campo] = ""
 
 def extrair_dados_chave_48(entrada: str) -> dict:
 
