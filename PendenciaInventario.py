@@ -237,25 +237,25 @@ def rodape():
 ##################################################################
 
 # Função para carregar dados
-#def carregar_dados():
-#    data = supabase.table("Pendencias_Inventario").select("*").execute()
-#    return pd.DataFrame(data.data)
+def carregar_dados():
+   data = supabase.table("Pendencias_Inventario").select("*").execute()
+   return pd.DataFrame(data.data)
 
-def carregar_dados(limit=10000):
-    data = (
-        supabase.table("Pendencias_Inventario")
-        .select("*")
-        .order("ID", desc=True)   # ordena do maior para o menor
-        .limit(limit)             # pega só os últimos 5 mil
-        .execute()
-    )
+# def carregar_dados(limit=10000):
+    # data = (
+        # supabase.table("Pendencias_Inventario")
+        # .select("*")
+        # .order("ID", desc=True)   # ordena do maior para o menor
+        # .limit(limit)             # pega só os últimos 5 mil
+        # .execute()
+    # )
 
-    df = pd.DataFrame(data.data)
+    # df = pd.DataFrame(data.data)
 
-    # opcional: reordena do mais antigo → mais novo para ficar "bonito"
-    df = df.sort_values(by="ID").reset_index(drop=True)
+    # # opcional: reordena do mais antigo → mais novo para ficar "bonito"
+    # df = df.sort_values(by="ID").reset_index(drop=True)
 
-    return df
+    # return df
 
 # Função para inserir
 def inserir_registro(
