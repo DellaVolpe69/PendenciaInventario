@@ -890,6 +890,12 @@ elif st.session_state.pagina == "Editar":
         df.sort_values(by=["ID", "NF_E", "STATUS", "MATRICULA", "FILIAL", "CARIMBO"], ascending=[False, False, True, True, True, True], inplace=True)
         st.dataframe(df.copy().set_index('ID'))
 
+    if df.empty:
+        st.info("Nenhum registro encontrado com os filtros aplicados.")
+        st.stop()
+
+    if not df.empty:
+
         # Selecionar registro para editar/excluir
         id_registro = st.selectbox("Selecione o ID para editar/excluir", df["ID"].sort_values(ascending=False))
 
