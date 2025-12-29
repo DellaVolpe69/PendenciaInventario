@@ -822,7 +822,7 @@ elif st.session_state.pagina == "Editar":
     </style>
     """, unsafe_allow_html=True)
 
-    if not df.empty:
+    if not df.empty and "ID" in df.columns:
         # 🔍 Filtros
 
         with st.expander("🔎 Filtros"):
@@ -890,7 +890,7 @@ elif st.session_state.pagina == "Editar":
         df.sort_values(by=["ID", "NF_E", "STATUS", "MATRICULA", "FILIAL", "CARIMBO"], ascending=[False, False, True, True, True, True], inplace=True)
         st.dataframe(df.copy().set_index('ID'))
 
-    if df.empty:
+    else:
         st.info("Nenhum registro encontrado com os filtros aplicados.")
         st.stop()
 
