@@ -228,7 +228,7 @@ st.markdown(f"""
 def rodape():
     st.markdown("""
         <div class="footer">
-            © 2025 <b>Della Volpe</b> | Desenvolvido por <a href="#">Raphael Chiavegati Oliveira</a>
+            © 2026 <b>Della Volpe</b> | Desenvolvido por <a href="#">Raphael Chiavegati Oliveira</a>
         </div>
     """, unsafe_allow_html=True)
 
